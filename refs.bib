@@ -1,149 +1,234 @@
-% refs.bib — updated to cover new citations used in the improved QFI text.
-% Notes:
-%   • Added: Billingsley, Durrett, Meyn–Tweedie, and a Time‑Varying Graphs survey (TVGSurvey).
-%   • Included a compatibility alias key `Chung1977` (same book as Chung1997) to avoid missing keys.
-%   • Left Seneta (1993) with a TODO note, as in your prior file.
+% =====================================================================
+% refs.bib  — consolidated bibliography for the Nimigi core papers
+% Covers citations used in the updated QFI and Idiom Projections main.tex,
+% plus widely used cross-stack references (drift, LDP, modal/markov cats).
+% =====================================================================
 
-@book{Kallenberg2002,
-  author    = {Kallenberg, Olav},
-  title     = {Foundations of Modern Probability},
-  edition   = {2nd},
-  series    = {Probability and Its Applications},
-  publisher = {Springer},
-  address   = {New York},
-  year      = {2002}
+% ---------------- Core manuscripts in this corpus ----------------
+@unpublished{elliott2025qfi,
+  title   = {The Quotient Flow Invariant},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
 }
 
-@book{Chung1997,
-  author    = {Chung, Fan R. K.},
-  title     = {Spectral Graph Theory},
-  series    = {CBMS Regional Conference Series in Mathematics},
-  volume    = {92},
-  publisher = {American Mathematical Society},
-  address   = {Providence, RI},
-  year      = {1997}
+@unpublished{elliott2025idiom,
+  title   = {Idiom Projections on Finite Paths and Fisher--Information Transport},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
 }
 
-% --- Compatibility alias for accidental key usage in the draft (same metadata as Chung1997) ---
-@book{Chung1977,
-  author    = {Chung, Fan R. K.},
-  title     = {Spectral Graph Theory},
-  series    = {CBMS Regional Conference Series in Mathematics},
-  volume    = {92},
-  publisher = {American Mathematical Society},
-  address   = {Providence, RI},
-  year      = {1997},
-  note      = {Duplicate key for compatibility; see also {Chung1997}}
+@unpublished{elliott2025drift,
+  title   = {Ergodic Metric Drift as a Path--Validity Engine: Finite Graphs},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
 }
 
+@unpublished{elliott2025flow,
+  title   = {Measure-Theoretic Flow Centrality},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
+}
+
+@unpublished{elliott2025pmb,
+  title   = {Parallel Murphy Budgeting for Experimental Design},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
+}
+
+@unpublished{elliott2025ki,
+  title   = {Kantian Inevitability: Canonical Forms Under Shared Constraints (KI-{\Delta}2)},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
+}
+
+@unpublished{elliott2025contracts,
+  title   = {Measure-Theoretic Compile-Time Safety Contracts for Decision Kernels},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
+}
+
+@unpublished{elliott2025graded,
+  title   = {A Typed, Contract-Indexed, Graded Effect Calculus for Safe Composition},
+  author  = {Elliott, Jacob Alexander},
+  year    = {2025},
+  note    = {Manuscript}
+}
+
+% ---------------- Classical information theory / geometry ----------
+@book{CoverThomas2006,
+  author    = {Cover, Thomas M. and Thomas, Joy A.},
+  title     = {Elements of Information Theory},
+  edition   = {2},
+  year      = {2006},
+  publisher = {Wiley}
+}
+
+@book{AmariNagaoka2000,
+  author    = {Amari, Shun-ichi and Nagaoka, Hiroshi},
+  title     = {Methods of Information Geometry},
+  year      = {2000},
+  publisher = {American Mathematical Society}
+}
+
+@book{Cencov1982,
+  author    = {Cencov, N. N.},
+  title     = {Statistical Decision Rules and Optimal Inference},
+  year      = {1982},
+  publisher = {American Mathematical Society}
+}
+
+@article{Blackwell1953,
+  author  = {Blackwell, David},
+  title   = {Equivalent Comparisons of Experiments},
+  journal = {The Annals of Mathematical Statistics},
+  year    = {1953},
+  volume  = {24},
+  number  = {2},
+  pages   = {265--272}
+}
+
+% ---------------- Quantum sufficiency / monotone metrics -----------
+@article{Petz1986,
+  author  = {Petz, D{\'e}nes},
+  title   = {Sufficient Subalgebras and the Relative Entropy of States of a von Neumann Algebra},
+  journal = {Communications in Mathematical Physics},
+  year    = {1986},
+  volume  = {105},
+  pages   = {123--131}
+}
+
+@article{Petz1996,
+  author  = {Petz, D{\'e}nes},
+  title   = {Monotone Metrics on Matrix Spaces},
+  journal = {Linear Algebra and its Applications},
+  year    = {1996},
+  volume  = {244},
+  pages   = {81--96}
+}
+
+% ---------------- Large deviations / spectral tilts ----------------
 @book{DemboZeitouni1998,
   author    = {Dembo, Amir and Zeitouni, Ofer},
   title     = {Large Deviations Techniques and Applications},
-  edition   = {2nd},
-  series    = {Applications of Mathematics},
-  volume    = {38},
-  publisher = {Springer},
-  address   = {New York},
-  year      = {1998}
+  edition   = {2},
+  year      = {1998},
+  publisher = {Springer}
 }
 
-@book{LevinPeresWilmer2017,
-  author    = {Levin, David A. and Peres, Yuval and Wilmer, Elizabeth L.},
-  title     = {Markov Chains and Mixing Times},
-  edition   = {2nd},
-  publisher = {American Mathematical Society},
-  address   = {Providence, RI},
-  year      = {2017}
+% ---------------- Drift / mixing / regeneration --------------------
+@book{MeynTweedie2009,
+  author    = {Meyn, Sean P. and Tweedie, Richard L.},
+  title     = {Markov Chains and Stochastic Stability},
+  edition   = {2},
+  year      = {2009},
+  publisher = {Cambridge University Press}
 }
 
-@book{KemenySnell1960,
-  author    = {Kemeny, John G. and Snell, J. Laurie},
-  title     = {Finite Markov Chains},
-  publisher = {D. Van Nostrand Company},
-  address   = {Princeton, NJ},
-  year      = {1960}
-}
-
-@article{Buchholz1994,
-  author  = {Buchholz, Peter},
-  title   = {Exact and ordinary lumpability in finite Markov chains},
-  journal = {Journal of Applied Probability},
-  year    = {1994},
-  volume  = {31},
-  number  = {1},
-  pages   = {59--75}
-}
-
-@book{DoyleSnell1984,
-  author    = {Doyle, Peter G. and Snell, J. Laurie},
-  title     = {Random Walks and Electric Networks},
-  series    = {Carus Mathematical Monographs},
-  volume    = {22},
-  publisher = {Mathematical Association of America},
-  address   = {Washington, DC},
-  year      = {1984},
-  note      = {Reprinted by MAA}
-}
-
-@unpublished{ElliottMTFC2025,
-  author = {Elliott, Jacob},
-  title  = {Measure-Theoretic Flow Centrality: From Measurable Pipelines to Budget-Aware Chokepoints},
-  note   = {Draft},
-  year   = {2025}
-}
-
-@article{BertiniFaggionatoGabrielli2015,
-  author  = {Bertini, Lorenzo and Faggionato, Alessandra and Gabrielli, Davide},
-  title   = {Large deviations of the empirical flow for continuous time Markov chains},
-  journal = {Annales de l'Institut Henri Poincar{\'e}, Probabilit{\'e}s et Statistiques},
-  year    = {2015},
-  volume  = {51},
+@article{KochenStone1964,
+  author  = {Kochen, Simon and Stone, Charles J.},
+  title   = {A Note on the Borel--Cantelli Lemma},
+  journal = {Illinois Journal of Mathematics},
+  year    = {1964},
+  volume  = {8},
   number  = {2},
-  pages   = {867--900}
+  pages   = {248--251}
 }
 
-@article{DonskerVaradhan1975I,
-  author  = {Donsker, Monroe and Varadhan, S. R. S.},
-  title   = {Asymptotic evaluation of certain Markov process expectations for large time. I},
-  journal = {Communications on Pure and Applied Mathematics},
+@article{Freedman1975,
+  author  = {Freedman, David A.},
+  title   = {On Tail Probabilities for Martingales},
+  journal = {The Annals of Probability},
   year    = {1975},
-  volume  = {28},
+  volume  = {3},
   number  = {1},
-  pages   = {1--47}
+  pages   = {100--118}
 }
 
-@article{Dodziuk1984,
-  author  = {Dodziuk, Jozef},
-  title   = {Difference equations, isoperimetric inequality and transience of certain random walks on graphs},
-  journal = {Transactions of the American Mathematical Society},
-  year    = {1984},
-  volume  = {284},
-  number  = {2},
-  pages   = {787--794}
+% ---------------- Optimal transport / continuity diagnostics -------
+@book{Villani2009,
+  author    = {Villani, C{\'e}dric},
+  title     = {Optimal Transport: Old and New},
+  year      = {2009},
+  publisher = {Springer}
 }
 
-@article{JerrumSinclair1989,
-  author  = {Jerrum, Mark and Sinclair, Alistair},
-  title   = {Approximating the permanent},
-  journal = {SIAM Journal on Computing},
-  year    = {1989},
-  volume  = {18},
-  number  = {6},
-  pages   = {1149--1178}
+% ---------------- Categorical probability (background, optional) ---
+@incollection{Giry1982,
+  author    = {Giry, Mich{\`e}le},
+  title     = {A Categorical Approach to Probability Theory},
+  booktitle = {Categorical Aspects of Topology and Analysis},
+  year      = {1982},
+  publisher = {Springer},
+  pages     = {68--85}
 }
 
-@book{HammackImrichKlavzar2011,
-  author    = {Hammack, Richard and Imrich, Wilfried and Klavzar, Sandi},
-  title     = {Handbook of Product Graphs},
-  edition   = {2nd},
-  publisher = {CRC Press},
-  address   = {Boca Raton, FL},
+@article{Fritz2020,
+  author  = {Fritz, Tobias},
+  title   = {A Synthetic Approach to Markov Kernels, Conditional Independence, and theorems on Sufficient Statistics},
+  journal = {Advances in Mathematics},
+  year    = {2020},
+  volume  = {370},
+  pages   = {107239}
+}
+
+@book{Jacobs2011,
+  author    = {Jacobs, Bart},
+  title     = {Probabilities, Distribution Monads, and Probability Monads},
+  publisher = {IFIP AICT},
   year      = {2011}
 }
 
+@inproceedings{Staton2017,
+  author    = {Staton, Sam},
+  title     = {Commutative Semantics for Probabilistic Programming},
+  booktitle = {Programming Languages and Systems (ESOP)},
+  year      = {2017},
+  publisher = {Springer}
+}
+
+% ---------------- Aggregation / lumpability / metastability --------
+@book{KemenySnell1976,
+  author    = {Kemeny, John G. and Snell, J. Laurie},
+  title     = {Finite Markov Chains},
+  year      = {1976},
+  publisher = {Springer}
+}
+
+@book{Seneta2006,
+  author    = {Seneta, Eugene},
+  title     = {Non-negative Matrices and Markov Chains},
+  edition   = {Revised},
+  year      = {2006},
+  publisher = {Springer}
+}
+
+@article{DeuflhardWeber2005,
+  author  = {Deuflhard, Peter and Weber, Marcus},
+  title   = {Robust Perron Cluster Analysis in Conformation Dynamics},
+  journal = {Linear Algebra and its Applications},
+  year    = {2005},
+  volume  = {398},
+  pages   = {161--184}
+}
+
+@inproceedings{LiWalshLittman2006,
+  author    = {Li, Lihong and Walsh, Thomas J. and Littman, Michael L.},
+  title     = {Towards a Unified Theory of State Abstraction for MDPs},
+  booktitle = {ISAIM},
+  year      = {2006}
+}
+
+% ---------------- Centrality / network flow analogies --------------
 @article{Freeman1977,
   author  = {Freeman, Linton C.},
-  title   = {A set of measures of centrality based on betweenness},
+  title   = {A Set of Measures of Centrality Based on Betweenness},
   journal = {Sociometry},
   year    = {1977},
   volume  = {40},
@@ -151,80 +236,156 @@
   pages   = {35--41}
 }
 
-@article{Touchette2009,
-  author  = {Touchette, Hugo},
-  title   = {The large deviation approach to statistical mechanics},
-  journal = {Physics Reports},
-  year    = {2009},
-  volume  = {478},
+@article{Katz1953,
+  author  = {Katz, Leo},
+  title   = {A New Status Index Derived from Sociometric Analysis},
+  journal = {Psychometrika},
+  year    = {1953},
+  volume  = {18},
   number  = {1},
-  pages   = {1--69}
+  pages   = {39--43}
 }
 
-@article{Mitrophanov2005,
-  author  = {Mitrophanov, Alexander Y.},
-  title   = {Sensitivity and convergence of uniformly ergodic Markov chains},
-  journal = {Journal of Applied Probability},
+@article{Newman2005,
+  author  = {Newman, M. E. J.},
+  title   = {A Measure of Betweenness Centrality Based on Random Walks},
+  journal = {Social Networks},
   year    = {2005},
-  volume  = {42},
-  number  = {4},
-  pages   = {1003--1014}
+  volume  = {27},
+  number  = {1},
+  pages   = {39--54}
 }
 
-@article{Seneta1993,
-  author  = {Seneta, Eugene},
-  title   = {Sensitivity of finite Markov chains},
-  journal = {Stochastic Models},
-  year    = {1993},
-  note    = {Bibliographic details to be completed}
+@book{DoyleSnell1984,
+  author    = {Doyle, Peter G. and Snell, J. Laurie},
+  title     = {Random Walks and Electric Networks},
+  publisher = {Mathematical Association of America},
+  year      = {1984}
 }
 
-@book{MacLane1998,
-  author    = {Mac Lane, Saunders},
-  title     = {Categories for the Working Mathematician},
-  edition   = {2nd},
-  series    = {Graduate Texts in Mathematics},
-  volume    = {5},
-  publisher = {Springer},
-  address   = {New York},
-  year      = {1998}
+% ---------------- Perturbation theory (optional background) --------
+@book{Kato1995,
+  author    = {Kato, Tosio},
+  title     = {Perturbation Theory for Linear Operators},
+  edition   = {Reprint of the 1980 edition},
+  year      = {1995},
+  publisher = {Springer}
 }
 
-% ======== NEW ADDITIONS FOR THE ENRICHED QFI DRAFT ========
-
-@book{Billingsley,
-  author    = {Billingsley, Patrick},
-  title     = {Probability and Measure},
-  edition   = {Anniversary Edition},
-  publisher = {Wiley},
-  address   = {Hoboken, NJ},
-  year      = {2012}
+@book{StewartSun1990,
+  author    = {Stewart, G. W. and Sun, Ji-guang},
+  title     = {Matrix Perturbation Theory},
+  year      = {1990},
+  publisher = {Academic Press}
 }
 
-@book{Durrett,
-  author    = {Durrett, Rick},
-  title     = {Probability: Theory and Examples},
-  edition   = {5th},
-  publisher = {Cambridge University Press},
-  address   = {Cambridge, UK},
-  year      = {2019}
+% ---------------- Detection / online control (used elsewhere) ------
+@article{Page1954,
+  author  = {Page, E. S.},
+  title   = {Continuous Inspection Schemes},
+  journal = {Biometrika},
+  year    = {1954},
+  volume  = {41},
+  number  = {1/2},
+  pages   = {100--115}
 }
 
-@book{MeynTweedie,
-  author    = {Meyn, Sean P. and Tweedie, Richard L.},
-  title     = {Markov Chains and Stochastic Stability},
-  edition   = {2nd},
-  publisher = {Cambridge University Press},
-  address   = {Cambridge, UK},
-  year      = {2009}
+@book{BassevilleNikiforov1993,
+  author    = {Basseville, Mich{\`e}le and Nikiforov, Igor V.},
+  title     = {Detection of Abrupt Changes: Theory and Application},
+  year      = {1993},
+  publisher = {Prentice Hall}
 }
 
-@article{TVGSurvey,
-  author  = {Holme, Petter and Saram{\"a}ki, Jari},
-  title   = {Temporal networks},
-  journal = {Physics Reports},
-  year    = {2012},
-  volume  = {519},
-  number  = {3},
-  pages   = {97--125}
+@article{BenjaminiHochberg1995,
+  author  = {Benjamini, Yoav and Hochberg, Yosef},
+  title   = {Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing},
+  journal = {Journal of the Royal Statistical Society. Series B},
+  year    = {1995},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300}
+}
+
+@article{JavanmardMontanari2018,
+  author  = {Javanmard, Adel and Montanari, Andrea},
+  title   = {Online Rules for Control of False Discovery Rate and False Discovery Exceedance},
+  journal = {The Annals of Statistics},
+  year    = {2018},
+  volume  = {46},
+  number  = {2},
+  pages   = {526--554}
+}
+
+@article{RamdasEtAl2018,
+  author  = {Ramdas, Aaditya and Zrnic, Tijana and Wainwright, Martin J. and Jordan, Michael I.},
+  title   = {SAFFRON: An Adaptive Algorithm for Online Control of the False Discovery Rate},
+  journal = {Proceedings of the International Conference on Machine Learning (ICML)},
+  year    = {2018}
+}
+
+% ---------------- Control / bounded rationality (used in KI stack) --
+@book{Puterman1994,
+  author    = {Puterman, Martin L.},
+  title     = {Markov Decision Processes: Discrete Stochastic Dynamic Programming},
+  year      = {1994},
+  publisher = {Wiley}
+}
+
+@book{Altman1999,
+  author    = {Altman, Eitan},
+  title     = {Constrained Markov Decision Processes},
+  year      = {1999},
+  publisher = {Chapman and Hall/CRC}
+}
+
+@article{Kappen2005,
+  author  = {Kappen, Hilbert J.},
+  title   = {Path Integrals and Symmetry Breaking for Optimal Control Theory},
+  journal = {Journal of Statistical Mechanics: Theory and Experiment},
+  year    = {2005},
+  number  = {11},
+  pages   = {P11011}
+}
+
+@article{Todorov2009,
+  author  = {Todorov, Emanuel},
+  title   = {Efficient Computation of Optimal Actions},
+  journal = {Proceedings of the National Academy of Sciences},
+  year    = {2009},
+  volume  = {106},
+  number  = {28},
+  pages   = {11478--11483}
+}
+
+@inproceedings{McAllester1999,
+  author    = {McAllester, David A.},
+  title     = {PAC-Bayesian Model Averaging},
+  booktitle = {COLT},
+  year      = {1999}
+}
+
+@book{Catoni2007,
+  author    = {Catoni, Olivier},
+  title     = {PAC-Bayesian Supervised Classification: The Thermodynamics of Statistical Learning},
+  year      = {2007},
+  publisher = {IMS}
+}
+
+% ---------------- LDP classical origins (optional background) ------
+@article{DonskerVaradhan1975,
+  author  = {Donsker, Monroe and Varadhan, S. R. Srinivasa},
+  title   = {Asymptotic Evaluation of Certain Markov Process Expectations for Large Time},
+  journal = {Communications on Pure and Applied Mathematics},
+  year    = {1975},
+  volume  = {28},
+  number  = {1},
+  pages   = {1--47}
+}
+
+@book{Ellis1985,
+  author    = {Ellis, Richard S.},
+  title     = {Entropy, Large Deviations, and Statistical Mechanics},
+  year      = {1985},
+  publisher = {Springer}
 }

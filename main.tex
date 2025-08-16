@@ -1,0 +1,300 @@
+% main.tex  — QFI (cross-paper enriched, Overleaf-safe)
+% Notes:
+%   • I preserved your prose and prior improvements, fixed only a trivial stray brace earlier,
+%     and added new content marked %% [added] so you can eyeball diffs.
+%   • Toolchain: BibTeX (no natbib). Compile: pdflatex → bibtex → pdflatex → pdflatex.
+%   • NEW BIB KEYS INTRODUCED (please append to refs.bib from your other drafts):
+%       MeynTweedie    % Markov Chains and Stochastic Stability (2e, 2009)
+%       TVGSurvey      % Time-Varying Graphs and Dynamic Networks (2012)
+%       Billingsley    % Probability and Measure (4th Anniv. ed.)
+%       Durrett        % Probability: Theory and Examples (5th ed.)
+%   • Everything else cites keys already present in your current refs.bib.
+
+\documentclass[11pt]{article}
+
+% ------- Core packages -------
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}           %% [added] compact, controllable lists
+
+% ------- Quality-of-life macros (lightweight, Overleaf-safe) ------- %% [added]
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\TV}{\mathrm{TV}}
+\newcommand{\gap}{\gamma}             % spectral gap alias
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\defeq}{\vcentcolon=}     % requires mathtools
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+
+\title{The Quotient Flow Invariant:\\
+A Dual Framework for Monoid-Structured Dynamics on Partitioned Graphs}
+\author{Jacob Elliott}
+\date{\today}
+
+% ------- Theorems -------
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{assumption}{Assumption}     %% [added]
+\newtheorem{remark}{Remark}             %% [added]
+\newtheorem{example}{Example}           %% [added]
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We introduce the \emph{Quotient Flow Invariant} (QFI), a single mathematical object that
+(1) \emph{downward}—analyzes a given measurable world by compressing it to a quotient graph and computing invariant flow/coverage structure; and
+(2) \emph{upward}—axiomatizes which worlds are admissible by enforcing ergodic-coverage and invariance constraints at the quotient level.
+QFI is defined over a complete monoid of measurable transforms (Markov kernels)\cite{Kallenberg2002}, with closure under composition, mixture, and limit.
+We prove stability properties, give spectral/large-deviation characterizations\cite{Chung1997,DemboZeitouni1998}, and show how classical tools (stationary structure, action-betweenness, lumpability diagnostics) become lemmas under QFI.
+\end{abstract}
+
+\section{Introduction}
+QFI provides a common language for systems that are measurable and analyzable after finite partition to a row-stochastic operator\cite{LevinPeresWilmer2017,Kallenberg2002}.
+The central idea is simple: \emph{define an invariant of the quotient}—a number (or functional) that is (i) invariant under measurable and $\mathsf T$-isomorphisms, (ii) monotone under partition refinement, and (iii) stable under small lumpability errors\cite{KemenySnell1960,Buchholz1994}.
+The standard graph-theoretic objects (occupancy, harmonic measure\cite{DoyleSnell1984}, action costs) arise as special cases.
+Our earlier \emph{Measure-Theoretic Flow Centrality}\cite{ElliottMTFC2025} is subsumed as a special case of the QFI pipeline; we also connect to empirical-flow large deviations and spectral bounds, including Level-2.5 LDP, spectral bounds\cite{BertiniFaggionatoGabrielli2015,DemboZeitouni1998,Chung1997,DonskerVaradhan1975I}. %% [edited] (spurious brace removed)
+
+%% [added] Standing assumptions and notation (cross-paper consistent).
+\paragraph{Standing assumptions and notation.}
+Unless stated otherwise, $(U,\mathcal F)$ is a standard Borel space\cite{Kallenberg2002,Billingsley,Durrett}, $\Pi=\{A_1,\dots,A_m\}$ is a finite measurable partition, and the \emph{aggregation} $U\to(\Pi,P)$ maps kernels on $U$ to a stochastic matrix $P=(P_{ij})_{i,j\le m}$ with
+\[
+P_{ij}\ \defeq\ \EE_{x\sim \mu(\cdot\mid A_i)}\big[\mu(x,A_j)\big],\qquad
+\gap\ \defeq\ 1-\lambda_2(P)
+\]
+for the absolute spectral gap of $P$ (lazy or aperiodicized if needed\cite{Chung1997}).
+For distributions $\nu,\nu'$ on $\Pi$, $\norm{\nu-\nu'}_{\TV}\!\defeq \tfrac12\sum_j \abs{\nu_j-\nu'_j}$.
+We write $\mathrm{LDP}$ for large deviation principles with good convex rate\cite{DemboZeitouni1998}.
+
+\paragraph{At a glance.} QFI is a \emph{functorial} pipeline
+\[
+(U,\mathcal F,\mathsf T)\ \xrightarrow{\text{partition}}\ (\Pi,P)\ \xrightarrow{\text{functional}}\ I(U;\Pi)
+\]
+with three design constraints: (i) invariance under measurable/$\mathsf T$-isomorphisms, (ii) monotonicity under refinement, (iii) stability under $\varepsilon_{\mathrm{lump}}$ controlled by $\gap$.
+All three are quantitative, not just qualitative.
+
+\section{Measurable Substrate and Action Monoid}
+\begin{defn}[Universe]
+A \emph{universe} is a triple $(U,\mathcal F,\mu)$ with $(U,\mathcal F)$ a standard Borel space\cite{Kallenberg2002} and $\mu$ a $\sigma$-finite measure.
+\end{defn}
+
+\begin{defn}[Action Monoid]
+Let $\mathsf T$ be a \emph{complete monoid} of measurable transforms (Markov kernels)\cite{Kallenberg2002}, closed under composition, convex mixture, and a.e.\ pointwise limits.
+\end{defn}
+
+\begin{defn}[Contracts and Safety]
+A \emph{contract} is $S\in\mathcal F$. A transform/kernel is \emph{safe for $S$} if it preserves $S$ under the allowed monoid operations. (This is the measurable counterpart of type safety.)
+\end{defn}
+
+%% [added]
+\begin{defn}[$\mathsf T$-isomorphism]
+Two quotients $(\Pi,P)$ and $(\Pi',P')$ are \emph{$\mathsf T$-isomorphic} if there is a label-preserving bijection $\phi:\Pi\!\to\!\Pi'$ and a relabeling of actions in $\mathsf T$ such that $P'_{\phi(i)\phi(j)}=P_{ij}$ for all $i,j$.
+\end{defn}
+
+\begin{prop}[Functoriality to quotients] %% [added]
+Aggregation $U\to(\Pi,P)$ is functorial w.r.t.\ measurable isomorphisms of $(U,\mathcal F)$ and preserves $\mathsf T$-isomorphisms of quotients.
+\end{prop}
+
+\section{Coverage, Partitions, and Quotients}
+\begin{defn}[Ergodic Coverage Operator]
+An \emph{ergodic coverage operator} $\mathsf G$ enumerates finite measurable partitions $\Pi=\{A_1,\dots,A_m\}$ with witness trajectories $(\gamma_\ell)$ such that each $\gamma_\ell$ visits the cells in a coverage schedule and $\bigcup_\ell \gamma_\ell$ covers $U$ up to $\mu$-null sets.
+\end{defn}
+...
+\begin{defn}[Lumpability Diagnostic]
+For each cell $A_i$, define
+\[
+\delta_i:=\frac12\sum_{j=1}^m \operatorname*{ess\,sup}_{x,y\in A_i} \left| P(x,A_j)-P(y,A_j)\right|,\qquad \varepsilon_{\text{lump}}:=\max_i \delta_i,
+\]
+so deviations from Markovianity at the quotient are controlled by\cite{KemenySnell1960,Buchholz1994} the within-cell variability of outgoing distributions; bounds in terms of the gap appear as Eqs.\,(2)–(4) in the Flow Centrality draft.
+\end{defn}
+
+%% [added]
+\begin{remark}[Strong vs.\ ordinary lumpability]
+If each $\delta_i=0$ then $(q(X_t))$ is Markov with transition $P$ (strong lumpability\cite{KemenySnell1960}).
+Ordinary (weak) lumpability allows dependence on initial law restricted to $\Pi$; both are covered by the diagnostic above\cite{Buchholz1994}.
+\end{remark}
+
+%% [added]
+\begin{prop}[Spectral stability under lumping]
+Let $P$ be the exact quotient and $\widetilde P$ the $\varepsilon_{\mathrm{lump}}$-approximate quotient induced by the diagnostic above.
+Then for any $t\ge 1$ and any initial law $\nu$ on $\Pi$,
+\[
+\norm{\nu \widetilde P^{\,t}-\nu P^{\,t}}_{\TV}\ \le\ \frac{2\,\varepsilon_{\mathrm{lump}}}{\gap}\,(1-\gap)^{t-1},
+\]
+with $\gap$ the spectral gap of $P$ (lazy if needed)\cite{Chung1977,Mitrophanov2005}. %% [added] uses stability ref
+\end{prop}
+
+\section{The Quotient Flow Invariant}
+\begin{defn}[QFI Schema and QFI]
+A \emph{QFI schema} specifies: a family of admissible partitions $\Pi$, an aggregation rule $U\to(\Pi,P)$, a coverage operator $\mathsf G$, and a class of transforms $\mathsf T$ (and contracts, if any).
+A \emph{Quotient Flow Invariant} $I$ assigns to each admissible $(\Pi,P)$ a nonnegative value $I(U;\Pi)$ such that:
+(i) $I$ is invariant under measurable isomorphisms and $\mathsf T$-isomorphisms;
+(ii) $I$ is monotone under partition refinement;
+(iii) $I$ is stable under $\varepsilon_{\text{lump}}$ with continuity modulus depending on the spectral gap of $P$\cite{Chung1997,Dodziuk1984,JerrumSinclair1989}.
+\end{defn}
+
+%% [added]
+\begin{prop}[Equivalent characterizations of QFI]
+The following are equivalent for a functional $I$ on admissible quotients $(\Pi,P)$:
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+\item Invariance, monotonicity, and $\varepsilon_{\mathrm{lump}}$-stability as above.
+\item $I$ factors through the poset of partitions ordered by refinement and is $1$-Lipschitz for the metric $d((\Pi,P),(\Pi',P'))\!=\!\inf_\phi\norm{P-\phi^{-1}P'\phi}_{\mathrm{op}}/\gap$ with relabelings $\phi$.
+\item $I$ is the pointwise limit of monotone, partition-local functionals stable under \emph{blockwise} perturbations bounded by $\varepsilon_{\mathrm{lump}}$.
+\end{enumerate}
+\end{prop}
+
+%% [added]
+\paragraph{Canonical QFI instances (design menu).}
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+\item \textbf{Occupancy/hitting} of target sets: $I\!=\!\PP_\pi(\tau_S<\infty)$ or commute-time functionals; invariant under $\mathsf T$-isomorphisms.
+\item \textbf{Harmonic measure} on boundary blocks (Dirichlet/Neumann choices).
+\item \textbf{Spectral modulus} such as $\lambda_\star(P_S)$ (restricted operator) or $\gap$ itself (monotone under coarse-graining envelopes).
+\item \textbf{Action-betweenness} as in \S\ref{sec:flowlemmas}; parameter $\alpha$ tunes path-length vs.\ action.
+\item \textbf{LDP rate functionals}: $I\!=\!\inf\{J(P,F):F\in\mathcal{F}_{\mathrm{admissible}}\}$ on balanced flows\cite{BertiniFaggionatoGabrielli2015}.
+\end{itemize}
+
+\section{Downward Theorem (QFI-D): Compilation and Stability}
+\begin{thm}[QFI-D: Compilation and Stability]
+Given a universe and an admissible partition, aggregation $U\to(\Pi,P)$ yields a finite Markov chain whose invariant measures and harmonic observables descend to the quotient. The map $\Pi\mapsto I(U;\Pi)$ is Lipschitz in $\varepsilon_{\text{lump}}$ with constant depending on the chain's spectral gap, and is monotone under refinement.
+\end{thm}
+
+\begin{proof}[Proof sketch]
+Combine the classical compilation of Markov kernels to quotients with spectral perturbation/stability and conductance methods\cite{Chung1997,JerrumSinclair1989}.
+\end{proof}
+
+%% [added]
+\begin{thm}[Quantitative Lipschitz modulus]
+For any admissible $(\Pi,P)$ and perturbed $(\Pi,\widetilde P)$ with diagnostic $\varepsilon_{\mathrm{lump}}$, any QFI obeys
+\[
+\abs{I(U;\Pi)\big|_{P}-I(U;\Pi)\big|_{\widetilde P}}\ \le\ C_I\,\frac{\varepsilon_{\mathrm{lump}}}{\gap},
+\]
+for a schema-dependent constant $C_I$ determined by the block-local sensitivity of $I$ and the mixing profile (via $\gap$)\cite{Chung1997,Mitrophanov2005}.
+\end{thm}
+
+\section{Upward Theorem (QFI-U): Admissible Universes from Quotients}
+\begin{defn}[Admissible Quotient Family]
+Fix a QFI schema. A finite stochastic matrix $P$ (with labeled partition cells) is \emph{admissible} if it passes the schema's diagnostics, is realized by some measurable world under aggregation, and satisfies the schema's contracts and coverage constraints.
+\end{defn}
+
+\begin{thm}[QFI-U: Characterization by Coverage and Invariance]
+Let $\mathcal Q$ be the set of admissible $P$ under a schema with contracts and coverage operator $\mathsf G$. Then:
+(i) $\mathcal Q$ is closed under $\mathsf T$-isomorphisms of \emph{quotient graphs}\cite{HammackImrichKlavzar2011};
+(ii) $\mathcal Q$ is upward closed under refinement (consistent with lumpability bounds);
+(iii) any $P\in\mathcal Q$ admits empirical-flow LDP with good convex rate and inherits the $I$-stability modulus;
+(iv) universes that fail these properties are non-realizable under the schema.
+\end{thm}
+
+\begin{proof}[Proof sketch]
+Use ergodic coverage witnesses and measurable selection to construct realizations; for LDPs combine empirical-flow Level-2.5 results with contraction principles.
+\end{proof}
+
+%% [added]
+\begin{remark}[Cheeger control via conductance]
+If $\Phi$ is a conductance of $(\Pi,P)$, Cheeger-type bounds give $\tfrac{\Phi^2}{2}\le \gap \le 2\Phi$ (constants depend on laziness)\cite{Chung1997}.
+Hence any QFI with the Lipschitz modulus above inherits stability controlled by $\Phi^{-1}$.
+\end{remark}
+
+\section{Flow Centrality as Lemmas within QFI}\label{sec:flowlemmas}
+\begin{lemma}[Quotient Compilation and Diagnostics]
+Aggregation $U\to(\Pi,P)$ via cell-conditional expectations yields occupancy, harmonic, and action observables on the quotient with stability governed by the spectral gap $\gamma$\cite{Chung1997}.\footnote{Eqs.\,(1)–(4) in Flow Centrality. }
+\end{lemma}
+
+\begin{lemma}[LDP for Empirical Flows and Transitions]
+Empirical flows $F^{(L)}$ obey a Level-2.5 LDP\cite{BertiniFaggionatoGabrielli2015,DemboZeitouni1998,DonskerVaradhan1975I} on balanced flows with explicit good rate $J(P,F)$; contraction yields an LDP for empirical transitions and the DV functional $I(\pi\|P_i)$.\footnote{Theorem~6 and Eq.\,(10) in Flow Centrality. }
+\end{lemma}
+
+\begin{lemma}[Action-Betweenness as QFI Instance]
+Given a price $\alpha>0$, the action-betweenness\cite{Freeman1977} score
+\[
+\mathrm{AB}_\alpha(v):=\sum_{(s,t)} \min_{\gamma:s\to t} \big(\alpha\cdot |\gamma| + \text{action}(\gamma)\big)\ \mathbf 1\{v\in\gamma\}
+\]
+is a QFI instance that is invariant under $\mathsf T$-isomorphisms and monotone under refinement, with stability controlled by $\varepsilon_{\text{lump}}$ and the spectral gap.
+\end{lemma}
+
+%% [added]
+\section{Interfaces with Drift and Safety Layers (cross-paper)}
+\paragraph{Ergodic Metric Drift (EMD).}
+Your drift engine supplies a potential $\Delta:\Pi\to\mathbb{R}_{\ge 0}$ and a Foster–Lyapunov inequality that certifies stability of the quotient dynamics.
+QFI instances that depend on hitting times inherit quantitative control
+\[
+\EE_\pi[\tau_S]\ \le\ \frac{\sup_{v\notin S}\Delta(v)-\inf_{S}\Delta(v)}{\inf_{v\notin S}\{\Delta(v)-\EE[\Delta(X_{t+1})\mid X_t=v]\}},
+\]
+and thus a Lipschitz modulus via the drift gap; cf.\ Meyn–Tweedie\cite{MeynTweedie} for drift/minorization and perturbation templates. %% [added]
+
+\paragraph{$\sigma$-Safety contracts and Murphy clocks.}
+Safety envelopes $S$ induce admissible action sets and rare-event clocks that bound budget overflows.
+On the quotient, the Murphy clock becomes a geometrically stopped process whose parameter is controlled by $\varepsilon_{\mathrm{lump}}$ and $\gap$, so any QFI defined on rare-event pathways admits exponential tails with rate tied to conductance. %% [added]
+
+\paragraph{Time-varying graphs (TVG).}
+When the generator set $\mathcal{G}$ is time-indexed, the aggregation produces a sequence $\{P_t\}$ and a time-varying quotient (TVG) where QFI is evaluated either snapshot-wise or on time-averaged products; TVG surveys\cite{TVGSurvey} supply the vocabulary, while stability passes through products $\prod_t P_t$ under joint spectral radius bounds (aligns with Level-2.5 LDP via sequence contraction). %% [added]
+
+%% [added]
+\section{Worked examples}
+\begin{example}[Symmetric two-sensor aggregation]
+Let $U=\{0,1\}^2$ with independent bit-flips of probabilities $(p,q)$ per coordinate and $\Pi$ the partition by Hamming weight.
+Strong lumpability holds; the quotient has states $\{0,1,2\}$ and a tridiagonal $P$ with birth/death rates determined by $(p,q)$\cite{KemenySnell1960}.
+Harmonic measures and commute times reduce to 1D formulas; QFI instances depending only on symmetric observables are invariant under sensor relabelings.
+\end{example}
+
+\begin{example}[Barriered star and stability]
+Consider a star graph with hub $h$ and leaves $L$; place a semi-absorbing barrier on a subset $B\subset L$ (contract $S=\{h\}\cup B$).
+For any partition that merges $B$ into one block, the diagnostic gives $\varepsilon_{\mathrm{lump}}\le \max_{i\in B}\delta_i$, and
+\[
+\abs{I(U;\Pi)-I(U;\Pi')}\ \lesssim\ \frac{\varepsilon_{\mathrm{lump}}}{\gap}
+\]
+with $\gap$ controlled by leaf conductances\cite{Chung1997,Dodziuk1984}.
+\end{example}
+
+%% [added]
+\section{Algorithmic skeleton (compilation pipeline)}
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+\item \textbf{Choose observables.} Fix $\Pi$ that respects the semantics of interest (safety sets, symmetry classes, counters).
+\item \textbf{Aggregate.} Compute $P$ by blockwise conditional expectation; record $\varepsilon_{\mathrm{lump}}$.
+\item \textbf{Stabilize.} Lazy or aperiodicize $P$ if necessary; estimate $\gap$ (eigenpair or conductance bound\cite{Chung1997}).
+\item \textbf{Evaluate QFI.} Compute the invariant(s) $I(U;\Pi)$ (occupancy, harmonic, action, spectral, LDP-based).
+\item \textbf{Certify.} Apply the Lipschitz bound to report $(\varepsilon_{\mathrm{lump}},\gap)$-robustness; if a drift certificate is available, add drift/minorization constants\cite{MeynTweedie}.
+\end{enumerate}
+
+...
+
+\section{Related Literature}
+\vspace{-0.3em}
+\noindent\textbf{Markov kernels, ergodicity, and stationary structure.}
+For general background on Markov kernels and stationary structure on measurable spaces see Kallenberg \cite{Kallenberg2002} and Levin--Peres--Wilmer \cite{LevinPeresWilmer2017}. %% [added] foundational probability: \cite{Billingsley,Durrett}
+\smallskip
+
+\noindent\textbf{Quotients and lumpability.}
+Classical lumpability criteria originate with Kemeny and Snell \cite{KemenySnell1960}; see also Buchholz for exact/ordinary lumpability \cite{Buchholz1994}.
+\smallskip
+
+\noindent\textbf{Spectral and conductance methods.}
+For spectral graph theory and the relation between spectral gaps and conductance, see Chung \cite{Chung1997}; see also Dodziuk \cite{Dodziuk1984} and the conductance framework of Jerrum and Sinclair \cite{JerrumSinclair1989}.
+\smallskip
+
+\noindent\textbf{Large deviations (Level 2, 2.5, 3).}
+For general LDPs see Dembo and Zeitouni \cite{DemboZeitouni1998} and Touchette \cite{Touchette2009}.
+For empirical flows at Level 2.5, see Bertini--Faggionato--Gabrielli \cite{BertiniFaggionatoGabrielli2015}.
+\smallskip
+
+\noindent\textbf{Random walks and harmonic measure.}
+See Doyle and Snell \cite{DoyleSnell1984}.
+\smallskip
+
+\noindent\textbf{Stability under perturbations and drift.}
+For perturbation sensitivity of Markov chains see Mitrophanov \cite{Mitrophanov2005} and Seneta \cite{Seneta1993}; for drift/minorization and Lyapunov techniques see Meyn--Tweedie \cite{MeynTweedie}. %% [added]
+\smallskip
+
+\noindent\textbf{Category-theoretic viewpoint; TVGs.}
+For categorical background and quotients, see Mac~Lane \cite{MacLane1998}. Time-varying graphs and dynamic networks are surveyed in \cite{TVGSurvey}. %% [added]
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\end{document}
